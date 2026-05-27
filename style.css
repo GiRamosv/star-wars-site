@@ -566,7 +566,7 @@ body {
 
   text-transform: uppercase;
 
-  animation: crawlMove 28s linear infinite;
+  animation: crawlMove 25s linear infinite;
 }
 
 .crawl .episode {
@@ -869,12 +869,45 @@ body {
   transform: scale(1.06);
 }
 
+/* HOVER BASE */
 .character-card:hover {
   transform: translateY(-10px) scale(1.03);
+}
 
-  border-color: rgba(255, 232, 31, 0.25);
+/* BLUE */
+.character-card:has(.blue):hover {
+  border-color: rgba(0, 170, 255, 0.35);
 
-  box-shadow: 0 0 40px rgba(255, 232, 31, 0.08);
+  box-shadow:
+    0 0 20px rgba(0, 170, 255, 0.15),
+    0 0 40px rgba(0, 170, 255, 0.08);
+}
+
+/* RED */
+.character-card:has(.red):hover {
+  border-color: rgba(255, 0, 0, 0.35);
+
+  box-shadow:
+    0 0 20px rgba(255, 0, 0, 0.15),
+    0 0 40px rgba(255, 0, 0, 0.08);
+}
+
+/* GREEN */
+.character-card:has(.green):hover {
+  border-color: rgba(0, 255, 100, 0.35);
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 100, 0.15),
+    0 0 40px rgba(0, 255, 100, 0.08);
+}
+
+/* GOLD */
+.character-card:has(.gold):hover {
+  border-color: rgba(255, 232, 31, 0.35);
+
+  box-shadow:
+    0 0 20px rgba(255, 232, 31, 0.15),
+    0 0 40px rgba(255, 232, 31, 0.08);
 }
 
 .character-card h3 {
@@ -918,8 +951,7 @@ body {
   background: var(--gold);
 
   box-shadow: 0 0 15px var(--gold);
-}
-
+}cr
 /* =====================================
    PREMIUM BANNER
 ===================================== */
@@ -1052,12 +1084,18 @@ body {
 }
 
 @keyframes crawlMove {
-  from {
-    transform: translateY(100%);
+    0% {
+    transform: translateY(120%);
+    opacity: 1;
   }
 
-  to {
-    transform: translateY(-250%);
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-220%);
+    opacity: 0;
   }
 }
 
