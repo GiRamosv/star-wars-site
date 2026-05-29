@@ -23,8 +23,11 @@ body {
   color: white;
   font-family: "Rajdhani", sans-serif;
   min-height: 100vh;
-}
 
+  /* ADICIONE ESSAS DUAS LINHAS ABAIXO */
+  display: flex;
+  flex-direction: column;
+}
 /* =====================================
    FUNDO ESTRELADO ANIMADO
 ===================================== */
@@ -357,7 +360,7 @@ body {
   position: absolute;
   left: -200px;
   bottom: 30px;
-  z-index: 5; /* <-- Corrigido para a Falcon ficar acima da navezinha */
+  z-index: 5;
 
   animation: shipFloat 6s ease-in-out infinite;
 }
@@ -381,12 +384,8 @@ body {
     drop-shadow(0 0 80px rgba(255, 255, 255, 0.2));
 }
 
-/* =====================================
-   HERO (Correção de Layout)
-===================================== */
 .hero {
   position: relative;
-  /* REMOVIDO o overflow-x daqui para sumir com a barreira invisível */
   width: min(1250px, calc(100% - 30px));
   min-height: 100vh;
   margin: auto;
@@ -396,7 +395,6 @@ body {
   gap: 40px;
 }
 
-/* <-- ADICIONADO: Força o texto para a direita --> */
 .hero-content {
   grid-column: 2;
   position: relative;
@@ -408,10 +406,10 @@ body {
 ===================================== */
 .space-ship {
   position: absolute;
-  top: auto; /* <-- Corrigido */
-  bottom: 40px; /* <-- Corrigido para passar lá embaixo */
+  top: auto;
+  bottom: 40px;
   left: -300px;
-  z-index: 1; /* <-- Corrigido para passar atrás da Falcon */
+  z-index: 1;
   pointer-events: none;
   animation: flyShip 14s linear infinite;
 }
@@ -424,7 +422,6 @@ body {
     drop-shadow(0 0 35px rgba(77, 184, 255, 0.2));
 }
 
-/* Movimento cinematográfico */
 @keyframes flyShip {
   0% {
     transform: translateX(0) translateY(0);
@@ -536,7 +533,7 @@ body {
 }
 
 /* =====================================
-   OPENING CRAWL
+   OPENING CRAWL (CORRIGIDO)
 ===================================== */
 
 .crawl-section {
@@ -566,7 +563,8 @@ body {
 
   text-transform: uppercase;
 
-  animation: crawlMove 28s linear infinite;
+  /* Alterado para 50s para ficar mais lento */
+  animation: crawlMove 50s linear infinite;
 }
 
 .crawl .episode {
@@ -591,6 +589,21 @@ body {
   font-size: 1.2rem;
 
   font-weight: bold;
+}
+
+/* Ajustado para sumir na hora certa e esperar 3 segundos antes do loop */
+@keyframes crawlMove {
+  0% {
+    transform: translateY(100%);
+  }
+  /* O texto termina de sumir da tela aos 32 segundos (91% do tempo) */
+  91% {
+    transform: translateY(-110%);
+  }
+  /* Fica parado invisível dos 32s aos 35s (pausa exata de 3 segundos) e reinicia */
+  100% {
+    transform: translateY(-110%);
+  }
 }
 
 /* =====================================
@@ -620,50 +633,10 @@ body {
 
 .carousel {
   margin-top: 40px;
-
-  overflow: hidden;
-
-  border-radius: 30px;
-
-  border: 1px solid rgba(255, 232, 31, 0.12);
-}
-
-.carousel-track {
-  display: flex;
-
-  width: 400%;
-
-  animation: slideCarousel 22s infinite;
-}
-
-.slide {
-  width: 25%;
-
-  min-height: 500px;
-
-  padding: 50px;
-
-  display: flex;
-  align-items: flex-end;
-}
-/* =====================================
-   IMAGENS DO CARROSSEL (ALTERE AQUI)
-===================================== */
-/* =====================================
-   FILMES (Novo layout com imagens no HTML)
-===================================== */
-
-.movies-section {
-  width: min(1250px, calc(100% - 30px));
-  margin: 120px auto;
-}
-
-.carousel {
-  margin-top: 40px;
   overflow: hidden;
   border-radius: 30px;
   border: 1px solid rgba(255, 232, 31, 0.12);
-  position: relative; /* Importante para o posicionamento da imagem */
+  position: relative;
 }
 
 .carousel-track {
@@ -672,51 +645,42 @@ body {
   animation: slideCarousel 22s infinite;
 }
 
-/* Formatação base do slide */
 .slide {
   width: 25%;
   min-height: 500px;
   padding: 50px;
   display: flex;
   align-items: flex-end;
-  position: relative; /* Garante que o conteúdo fique acima da imagem */
+  position: relative;
 }
 
-/* Estilização da imagem do slide */
 .slide-img {
   position: absolute;
-  inset: 0; /* Preenche todo o slide */
-  z-index: 1; /* Fica atrás do conteúdo */
+  inset: 0;
+  z-index: 1;
 }
 
 .slide-img img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Encaixa a imagem perfeitamente sem distorcer */
+  object-fit: cover;
   object-position: center;
 }
 
-/* Criando o gradiente escuro por cima da imagem (via pseudoelemento) */
 .slide::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2; /* Fica acima da imagem e abaixo do texto */
-  background: linear-gradient(
-    rgba(0, 0, 0, 0.15),
-    /* Bem suave no topo, quase invisível */ rgba(0, 0, 0, 0.55)
-      /* Um meio-termo perfeito na base: protege o texto sem escurecer a foto */
-  );
+  z-index: 2;
+  background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.55));
 }
 
-/* Estilização do conteúdo do slide (trazendo para frente) */
 .slide-content {
   max-width: 500px;
   position: relative;
-  z-index: 3; /* Traz o texto para frente de tudo */
+  z-index: 3;
 }
 
-/* Manter o restante das suas formatações de texto */
 .slide-content span {
   color: var(--gold);
   letter-spacing: 3px;
@@ -735,7 +699,6 @@ body {
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* Manter sua animação slideCarousel existente */
 @keyframes slideCarousel {
   0%,
   18% {
@@ -757,55 +720,6 @@ body {
     transform: translateX(0);
   }
 }
-
-.slide-content span {
-  color: var(--gold);
-
-  letter-spacing: 3px;
-}
-
-.slide-content h3 {
-  margin: 15px 0;
-
-  font-size: 3rem;
-
-  font-family: "Orbitron", sans-serif;
-}
-
-.slide-content p {
-  line-height: 1.8;
-
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.slide1 {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)),
-    url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=2072&auto=format&fit=crop")
-      center/cover;
-}
-
-.slide2 {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)),
-    url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2027&auto=format&fit=crop")
-      center/cover;
-}
-
-.slide3 {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)),
-    url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop")
-      center/cover;
-}
-
-.slide4 {
-  background:
-    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)),
-    url("https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?q=80&w=2013&auto=format&fit=crop")
-      center/cover;
-}
-
 /* =====================================
    PERSONAGENS
 ===================================== */
@@ -869,12 +783,45 @@ body {
   transform: scale(1.06);
 }
 
+/* HOVER BASE */
 .character-card:hover {
   transform: translateY(-10px) scale(1.03);
+}
 
-  border-color: rgba(255, 232, 31, 0.25);
+/* BLUE */
+.character-card:has(.blue):hover {
+  border-color: rgba(0, 170, 255, 0.35);
 
-  box-shadow: 0 0 40px rgba(255, 232, 31, 0.08);
+  box-shadow:
+    0 0 30px rgba(0, 170, 255, 0.15),
+    0 0 50px rgba(0, 170, 255, 0.08);
+}
+
+/* RED */
+.character-card:has(.red):hover {
+  border-color: rgba(255, 0, 0, 0.35);
+
+  box-shadow:
+    0 0 30px rgba(255, 0, 0, 0.15),
+    0 0 50px rgba(255, 0, 0, 0.08);
+}
+
+/* GREEN */
+.character-card:has(.green):hover {
+  border-color: rgba(0, 255, 100, 0.35);
+
+  box-shadow:
+    0 0 30px rgba(0, 255, 100, 0.15),
+    0 0 50px rgba(0, 255, 100, 0.08);
+}
+
+/* GOLD */
+.character-card:has(.gold):hover {
+  border-color: rgba(255, 232, 31, 0.35);
+
+  box-shadow:
+    0 0 30px rgba(255, 232, 31, 0.15),
+    0 0 50px rgba(255, 232, 31, 0.08);
 }
 
 .character-card h3 {
@@ -899,50 +846,41 @@ body {
 .blue {
   background: var(--blue);
 
-  box-shadow: 0 0 15px var(--blue);
+  box-shadow: 0 0 50px var(--blue);
 }
 
 .red {
   background: var(--red);
 
-  box-shadow: 0 0 15px var(--red);
+  box-shadow: 0 0 50px var(--red);
 }
 
 .green {
   background: var(--green);
 
-  box-shadow: 0 0 15px var(--green);
+  box-shadow: 0 0 50px var(--green);
 }
 
 .gold {
   background: var(--gold);
-
-  box-shadow: 0 0 15px var(--gold);
+  box-shadow: 0 0 50px var(--gold);
 }
 
 /* =====================================
    PREMIUM BANNER
 ===================================== */
-
 .premium-banner {
   width: min(1250px, calc(100% - 30px));
-
   margin: auto auto 100px;
-
   padding: 80px;
-
   border-radius: 35px;
-
   position: relative;
-
   overflow: hidden;
-
   background: linear-gradient(
     135deg,
     rgba(255, 232, 31, 0.08),
     rgba(255, 255, 255, 0.02)
   );
-
   border: 1px solid rgba(255, 232, 31, 0.12);
 }
 
@@ -953,38 +891,30 @@ body {
 
 .banner-content span {
   color: var(--gold);
-
   letter-spacing: 3px;
 }
 
 .banner-content h2 {
   margin: 20px 0;
-
   font-size: clamp(2rem, 4vw, 4rem);
-
   font-family: "Orbitron", sans-serif;
 }
 
 .banner-content p {
   max-width: 700px;
-
   line-height: 1.8;
-
   color: rgba(255, 255, 255, 0.75);
-
   margin-bottom: 30px;
 }
 
 /* =====================================
-   ANIMAÇÕES
+   ANIMAÇÕES EXTRAS
 ===================================== */
-
 @keyframes floatImage {
   0%,
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-20px);
   }
@@ -995,19 +925,8 @@ body {
   100% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.06);
-  }
-}
-
-@keyframes glowRotate {
-  from {
-    transform: rotate(0);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }
 
@@ -1017,7 +936,6 @@ body {
       0 0 10px rgba(255, 232, 31, 0.9),
       0 0 20px rgba(255, 232, 31, 0.3);
   }
-
   to {
     text-shadow:
       0 0 20px rgba(255, 232, 31, 1),
@@ -1025,65 +943,15 @@ body {
   }
 }
 
-@keyframes slideCarousel {
-  0%,
-  18% {
-    transform: translateX(0);
-  }
-
-  25%,
-  43% {
-    transform: translateX(-25%);
-  }
-
-  50%,
-  68% {
-    transform: translateX(-50%);
-  }
-
-  75%,
-  93% {
-    transform: translateX(-75%);
-  }
-
-  100% {
-    transform: translateX(0);
-  }
-}
-
-@keyframes crawlMove {
-  from {
-    transform: translateY(100%);
-  }
-
-  to {
-    transform: translateY(-250%);
-  }
-}
-
-@keyframes fadeLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 /* =====================================
    RESPONSIVO
 ===================================== */
-
 @media (max-width: 950px) {
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
   }
 
-  /* <-- ADICIONADO: Volta o texto pro lugar no celular --> */
   .hero-content {
     grid-column: 1;
     margin-top: 50px;
@@ -1104,6 +972,17 @@ body {
   .navbar {
     flex-direction: column;
     gap: 20px;
+  }
+
+  .footer-container {
+    justify-content: center;
+    text-align: center;
+    gap: 25px;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-left: 0;
   }
 }
 
@@ -1127,53 +1006,37 @@ body {
 }
 
 /* ===================================================
-   ESTILOS GERAIS DO SITE (PÓS-LOADER)
-   =================================================== */
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #050510; /* Fundo escuro espacial */
-  color: white;
-  font-family: "Segoe UI", Roboto, sans-serif;
-  overflow-x: hidden;
-}
-
-.site-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  text-align: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.site-content h1 {
-  color: #ffe81f; /* Amarelo clássico */
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* ===================================================
-   ESTILOS DO RODAPÉ (SITE FOOTER) - APENAS AMARELO
-   =================================================== */
+   FOOTER COMPLETO (DE PONTA A PONTA NA TELA)
+=================================================== */
 .site-footer {
   background-color: #020205; /* Preto profundo */
   color: #bdc3c7;
   font-family: "Segoe UI", Roboto, sans-serif;
-  padding: 50px 20px 20px 20px;
-  margin-top: 80px;
+  padding: 50px 20px 40px 20px; /* Um pouco mais de preenchimento embaixo */
   position: relative;
   box-sizing: border-box;
 
-  /* CORRIGIDO: Divisória agora é um Sabre de Luz Amarelo */
+  /* A MÁGICA VERTICAL: Empurra o footer para o final absoluto da página */
+  margin-top: auto;
+  margin-bottom: 0 !important;
+
+  /* MÁGICA HORIZONTAL: Continua indo de ponta a ponta */
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+
+  /* Divisória Sabre de Luz Amarelo */
   border-top: 2px solid #ffe81f;
-  box-shadow: 0 -5px 25px rgba(255, 232, 31, 0.25);
+  box-shadow:
+    0 100vh 0 0 #020205,
+    0 -5px 25px rgba(255, 232, 31, 0.25);
 }
 
 .footer-container {
-  max-width: 1100px;
+  /* Alinha o conteúdo interno do rodapé com o miolo do seu site */
+  width: min(1250px, calc(100% - 30px));
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -1194,7 +1057,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* CORRIGIDO: Unificado para manter apenas o Neon Amarelo em ambos */
 .yellow-neon,
 .cyan-neon {
   color: #ffe81f;
@@ -1236,64 +1098,24 @@ body {
   transition: all 0.3s ease;
 }
 
-/* CORRIGIDO: Efeito hover agora brilha em amarelo */
 .links-box a:hover {
   color: #ffffff;
   text-shadow: 0 0 8px #ffe81f;
   transform: translateX(5px);
 }
 
-/* Coluna de Redes Sociais com Botões de Ícone */
-/* ===================================================
-   CORREÇÃO: REDES SOCIAIS (TAMANHO, GLOW E ESPAÇAMENTO)
-   =================================================== */
+/* Redes Sociais */
 .social-icons {
-  display: flex;
-  gap: 18px; /* Aumenta o espaço horizontal entre um ícone e outro */
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 20px; /* Ajustado para um espaçamento mais limpo */
   margin-top: 15px;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .social-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 46px; /* Aumentado para criar uma área de clique imponente */
-  height: 46px; /* Aumentado para ficar perfeitamente redondo */
-  background: rgba(
-    255,
-    255,
-    255,
-    0.04
-  ); /* Fundo sutil para destacar a estrutura */
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  text-decoration: none; /* CRÍTICO: Remove aquela linha azul feia de link */
-  outline: none;
-
-  /* Transição suave e elástica ao passar o mouse */
-  transition:
-    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    border-color 0.3s,
-    background-color 0.3s,
-    box-shadow 0.3s;
-}
-
-/* ===================================================
-   FORÇAR ALINHAMENTO HORIZONTAL SEGURO
-   =================================================== */
-.social-icons {
-  display: flex !important; /* Ativa o Flexbox obrigatoriamente */
-  flex-direction: row !important; /* Força os ícones a ficarem estritamente lado a lado */
-  gap: 40px; /* Espaçamento perfeito entre eles */
-  margin-left: 20px;
-  margin-top: 15px;
-  align-items: center; /* Alinha todos na mesma altura */
-  justify-content: flex-start; /* Alinha o grupo à esquerda (ou center se preferir) */
-}
-
-.social-icon {
-  display: inline-flex !important; /* Garante que a bolinha seja um bloco flexível interno */
+  display: inline-flex !important;
   align-items: center;
   justify-content: center;
   width: 44px;
@@ -1301,23 +1123,20 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  text-decoration: none !important; /* Arranca qualquer linha de link debaixo do logo */
+  text-decoration: none !important;
 
-  /* Animação suave */
   transition:
     transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     border-color 0.3s,
     box-shadow 0.3s;
 }
 
-/* Efeito Hover Amarelo */
 .social-icon:hover {
   transform: scale(1.2);
   border-color: #ffe81f;
   box-shadow: 0 0 15px rgba(255, 232, 31, 0.6);
 }
 
-/* Tamanho das imagens dos logos */
 .social-img {
   width: 22px;
   height: 22px;
@@ -1337,7 +1156,7 @@ body {
 /* Rodapé Inferior (Copyright) */
 .footer-bottom {
   text-align: center;
-  margin-left: 300px;
+  margin-left: 320px; /* CORRIGIDO: Removido os 300px que quebravam o alinhamento */
   margin-top: 50px;
   padding-top: 20px;
   border-top: 1px solid rgba(143, 156, 166, 0.05);
@@ -1349,7 +1168,7 @@ body {
   margin: 0;
 }
 
-/* Responsividade simples para telas menores */
+/* Responsividade */
 @media (max-width: 600px) {
   .footer-container {
     flex-direction: column;
